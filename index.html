@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="ro">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#111c2c"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="RoadCost">
+<link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="icon-192.png">
+<title>RoadCost — Vehicle Manager</title>
+<style>
+:root{--bg:#0b1220;--panel:#131f30;--panel2:#1b2a3e;--line:#29394d;--text:#f3f6fa;--muted:#9aabc0;--lime:#d5f36a;--red:#ff8178;--blue:#83b8ff;--radius:18px}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:15px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;padding-bottom:90px}
+header{padding:calc(env(safe-area-inset-top) + 18px) 18px 18px;background:linear-gradient(145deg,#17283d,#101a29);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:11px}.logo{width:42px;height:42px;border-radius:13px;background:var(--lime);color:#172313;display:grid;place-items:center;font-size:23px;font-weight:900}.brand b{font-size:19px;letter-spacing:1px}.brand small{display:block;color:var(--muted);font-size:10px;letter-spacing:1.3px;margin-top:3px}
+.wrap{max-width:760px;margin:auto;padding:18px}.greeting{margin:20px 0 16px}.eyebrow{font-size:10px;color:var(--muted);letter-spacing:1.4px;font-weight:700}.greeting h1{font-size:27px;margin:7px 0}.muted{color:var(--muted)}.grid{display:grid;grid-template-columns:1fr 1fr;gap:11px}.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:16px;margin-bottom:12px}.metric small{color:var(--muted);font-size:11px}.metric strong{display:block;font-size:24px;margin:8px 0 2px;letter-spacing:-.5px}.lime{color:var(--lime)}h2{font-size:18px;margin:4px 0 14px}h3{font-size:15px;margin:0 0 10px}.section{display:none}.section.active{display:block}.nav{position:fixed;z-index:5;bottom:0;left:0;right:0;background:#111c2cf2;border-top:1px solid var(--line);display:flex;justify-content:space-around;padding:9px 4px calc(env(safe-area-inset-bottom) + 8px);backdrop-filter:blur(15px)}.nav button{background:none;border:0;color:var(--muted);font-size:10px;padding:5px;display:grid;gap:4px;justify-items:center}.nav button span{font-size:19px}.nav button.active{color:var(--lime)}
+button,.btn{border:0;border-radius:12px;background:var(--lime);color:#172313;font-weight:750;padding:12px 15px;font-size:14px;cursor:pointer}.btn.secondary,button.secondary{background:var(--panel2);color:var(--text);border:1px solid var(--line)}button.danger{background:#44272c;color:#ffaaa4}.actions{display:flex;gap:8px;flex-wrap:wrap}.actions button{flex:1}
+label{display:block;font-size:12px;color:var(--muted);margin:11px 0 6px}input,select,textarea{width:100%;background:#0d1725;color:var(--text);border:1px solid var(--line);border-radius:11px;padding:12px;font:inherit;outline:none}input:focus,select:focus{border-color:var(--lime)}.formgrid{display:grid;grid-template-columns:1fr 1fr;gap:0 10px}.full{grid-column:1/-1}.result{background:#202f43;border:1px solid #34475f;border-radius:15px;padding:16px;margin:14px 0}.result strong{font-size:27px;color:var(--lime)}.row{display:flex;justify-content:space-between;gap:12px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)}.row:last-child{border:0}.tag{font-size:10px;background:#263b32;color:var(--lime);padding:5px 8px;border-radius:20px}.item{padding:12px 0;border-bottom:1px solid var(--line)}.item:last-child{border:0}.item b{display:block}.item small{color:var(--muted)}.empty{text-align:center;color:var(--muted);padding:22px 8px}.progress{height:9px;background:#26364a;border-radius:20px;overflow:hidden;margin:12px 0}.progress i{display:block;height:100%;background:var(--lime)}.hint{font-size:11px;color:var(--muted);line-height:1.5}.toast{position:fixed;bottom:85px;left:50%;transform:translateX(-50%);background:#e1f5a3;color:#172313;padding:10px 16px;border-radius:30px;font-weight:700;display:none;z-index:9;white-space:nowrap}.topline{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}.pill{border:1px solid var(--line);border-radius:30px;padding:6px 9px;color:var(--muted);font-size:11px}
+@media(min-width:650px){.wrap{padding:25px}.greeting h1{font-size:32px}}
+</style>
+</head>
+<body>
+<header><div class="brand"><div class="logo">R</div><div><b>ROADCOST</b><small>SMART VEHICLE MANAGEMENT</small></div></div></header>
+<main class="wrap">
+<section id="dashboard" class="section active">
+ <div class="greeting"><div class="eyebrow">PANOU DE CONTROL</div><h1>Control asupra fiecărui kilometru.</h1><div class="muted">Bun venit în garajul tău.</div></div>
+ <div class="grid">
+  <div class="card metric"><small>CHELTUIELI LUNA ACEASTA</small><strong id="monthTotal" class="lime">0 lei</strong><small>din toate categoriile</small></div>
+  <div class="card metric"><small>ALIMENTĂRI</small><strong id="fuelCount">0</strong><small>înregistrate</small></div>
+  <div class="card metric"><small>MAȘINI ÎN GARAJ</small><strong id="carCount">1</strong><small>vehicule</small></div>
+  <div class="card metric"><small>COST COMBUSTIBIL / 100 KM</small><strong id="per100">—</strong><small>estimare pe baza setărilor</small></div>
+ </div>
+ <div class="card"><div class="topline"><h2>Mașina selectată</h2><span class="tag">ACTIVĂ</span></div><h3 id="dashCar">Volkswagen Golf GTI</h3><div class="muted" id="dashDetails">2017 · 2.0 TSI · DSG</div><div class="row"><span class="muted">Kilometraj actual</span><b id="dashOdo">— km</b></div><div class="row"><span class="muted">Cheltuieli totale</span><b id="allTotal">0 lei</b></div></div>
+ <div class="card"><h2>Activitate recentă</h2><div id="recent" class="empty">Nu ai înregistrări încă. Adaugă prima alimentare sau cheltuială.</div></div>
+</section>
+<section id="fuel" class="section">
+ <div class="eyebrow">JURNAL AUTO</div><h1>Alimentări</h1>
+ <div class="card"><h2>Adaugă alimentare</h2><div class="formgrid">
+ <div><label>Data</label><input id="fDate" type="date"></div><div><label>Kilometraj (km)</label><input id="fOdo" type="number" placeholder="ex. 125000"></div>
+ <div><label>Litri</label><input id="fLiters" type="number" step=".01" placeholder="ex. 45"></div><div><label>Preț / litru (lei)</label><input id="fPrice" type="number" step=".01" placeholder="ex. 7.50"></div>
+ <div class="full"><label>Stație / observații (opțional)</label><input id="fNote" placeholder="ex. OMV, benzină 100"></div>
+ </div><div class="result"><div class="muted">TOTAL ALIMENTARE</div><strong id="fuelPreview">0,00 lei</strong></div><button onclick="addFuel()">Salvează alimentarea</button></div>
+ <div class="card"><h2>Istoric alimentări</h2><div id="fuelList" class="empty">Nicio alimentare înregistrată.</div></div>
+</section>
+<section id="expenses" class="section">
+ <div class="eyebrow">EVIDENȚĂ FINANCIARĂ</div><h1>Cheltuieli</h1>
+ <div class="card"><h2>Adaugă cheltuială</h2><div class="formgrid">
+ <div><label>Data</label><input id="eDate" type="date"></div><div><label>Sumă (lei)</label><input id="eAmount" type="number" step=".01" placeholder="ex. 350"></div>
+ <div><label>Categorie</label><select id="eCat"><option>Service</option><option>Piese</option><option>Asigurare RCA</option><option>ITP</option><option>Impozit</option><option>Spălătorie</option><option>Anvelope</option><option>Parcare / taxe</option><option>Altele</option></select></div>
+ <div><label>Descriere</label><input id="eNote" placeholder="ex. schimb ulei"></div></div><button onclick="addExpense()">Salvează cheltuiala</button></div>
+ <div class="card"><h2>Istoric cheltuieli</h2><div id="expenseList" class="empty">Nicio cheltuială înregistrată.</div></div>
+</section>
+<section id="garage" class="section">
+ <div class="eyebrow">VEHICULELE TALE</div><h1>Garaj</h1>
+ <div class="card"><h2>Adaugă / editează mașină</h2><div class="formgrid">
+ <div class="full"><label>Marcă și model</label><input id="cName" placeholder="ex. Volkswagen Golf GTI"></div>
+ <div><label>An</label><input id="cYear" type="number" placeholder="2017"></div><div><label>Motorizare</label><input id="cEngine" placeholder="2.0 TSI"></div>
+ <div><label>Transmisie</label><select id="cGear"><option>DSG</option><option>Manuală</option><option>Automată</option></select></div><div><label>Kilometraj actual</label><input id="cOdo" type="number" placeholder="125000"></div>
+ </div><button onclick="saveCar()">Salvează mașina</button></div>
+ <div class="card"><h2>Garajul meu</h2><div id="carList"></div></div>
+</section>
+<section id="reports" class="section">
+ <div class="eyebrow">ANALIZĂ ȘI PLANIFICARE</div><h1>Rapoarte</h1>
+ <div class="card"><h2>Calculator de drum</h2><div class="formgrid">
+ <div><label>Distanță (km, un sens)</label><input id="rKm" type="number" value="350"></div><div><label>Consum (L/100 km)</label><input id="rCons" type="number" step=".1" value="8.5"></div>
+ <div><label>Preț carburant (lei/L)</label><input id="rPrice" type="number" step=".01" value="7.5"></div><div><label>Traseu</label><select id="rTrip"><option value="2">Dus-întors</option><option value="1">Doar dus</option></select></div>
+ </div><div class="result"><div class="muted">COST ESTIMAT</div><strong id="rTotal">446,25 lei</strong><div class="muted" id="rLiters">59,50 litri · 700 km</div></div></div>
+ <div class="card"><h2>Buget lunar</h2><label>Buget dorit (lei)</label><input id="budget" type="number" value="1000" oninput="render()"><div class="row"><span class="muted">Cheltuit luna aceasta</span><b id="budgetSpent">0 lei</b></div><div class="progress"><i id="budgetBar" style="width:0%"></i></div><div class="row"><span class="muted">Disponibil</span><b id="budgetLeft">1000 lei</b></div></div>
+ <div class="card"><h2>Backup date</h2><p class="hint">Datele sunt păstrate pe acest dispozitiv, în browser. Exportă periodic un backup pentru a nu le pierde dacă ștergi datele Safari sau schimbi telefonul.</p><div class="actions"><button class="secondary" onclick="exportData()">Exportă backup</button><button class="secondary" onclick="document.getElementById('importFile').click()">Importă backup</button></div><input id="importFile" type="file" accept="application/json" hidden onchange="importData(event)"></div>
+</section>
+</main>
+<nav class="nav">
+<button class="active" data-tab="dashboard"><span>⌂</span>Acasă</button><button data-tab="fuel"><span>⛽</span>Alimentări</button><button data-tab="expenses"><span>▤</span>Costuri</button><button data-tab="garage"><span>🚘</span>Garaj</button><button data-tab="reports"><span>▥</span>Rapoarte</button>
+</nav><div class="toast" id="toast"></div>
+<script>
+const KEY='roadcost_v1';
+const today=new Date().toISOString().slice(0,10);
+let db=JSON.parse(localStorage.getItem(KEY)||'null')||{cars:[{id:1,name:'Volkswagen Golf 7.5 GTI',year:'2017',engine:'2.0 TSI',gear:'DSG',odo:'',active:true}],fuel:[],expenses:[]};
+const $=id=>document.getElementById(id), num=id=>Number($(id).value)||0, fmt=n=>Number(n||0).toLocaleString('ro-RO',{minimumFractionDigits:2,maximumFractionDigits:2});
+function persist(){localStorage.setItem(KEY,JSON.stringify(db));render()}
+function toast(t){$('toast').textContent=t;$('toast').style.display='block';setTimeout(()=>$('toast').style.display='none',2200)}
+function addFuel(){let liters=num('fLiters'),price=num('fPrice'),odo=num('fOdo');if(!liters||!price){toast('Completează litrii și prețul.');return}db.fuel.unshift({date:$('fDate').value||today,liters,price,odo,note:$('fNote').value,total:liters*price});if(odo&&db.cars[0])db.cars[0].odo=odo;['fLiters','fPrice','fOdo','fNote'].forEach(x=>$(x).value='');persist();toast('Alimentare salvată!')}
+function addExpense(){let amount=num('eAmount');if(!amount){toast('Introdu suma cheltuielii.');return}db.expenses.unshift({date:$('eDate').value||today,amount,cat:$('eCat').value,note:$('eNote').value});$('eAmount').value='';$('eNote').value='';persist();toast('Cheltuială salvată!')}
+function saveCar(){let car={id:Date.now(),name:$('cName').value||'Mașină nouă',year:$('cYear').value,engine:$('cEngine').value,gear:$('cGear').value,odo:$('cOdo').value,active:true};db.cars.push(car);persist();toast('Mașină adăugată!')}
+function del(type,id){if(!confirm('Ștergi această înregistrare?'))return;db[type]=db[type].filter(x=>x.id!==id);persist()}
+function render(){
+ let month=today.slice(0,7),fu=db.fuel.filter(x=>x.date.startsWith(month)),ex=db.expenses.filter(x=>x.date.startsWith(month)),m=fu.reduce((s,x)=>s+x.total,0)+ex.reduce((s,x)=>s+x.amount,0),all=db.fuel.reduce((s,x)=>s+x.total,0)+db.expenses.reduce((s,x)=>s+x.amount,0),car=db.cars[0]||{};
+ $('monthTotal').textContent=fmt(m)+' lei';$('fuelCount').textContent=db.fuel.length;$('carCount').textContent=db.cars.length;$('per100').textContent=db.fuel.length?fmt(db.fuel[0].price*8.5)+' lei':'—';
+ $('dashCar').textContent=car.name||'Nicio mașină';$('dashDetails').textContent=[car.year,car.engine,car.gear].filter(Boolean).join(' · ');$('dashOdo').textContent=car.odo?Number(car.odo).toLocaleString('ro-RO')+' km':'Nespecificat';$('allTotal').textContent=fmt(all)+' lei';
+ let recent=[...db.fuel.map(x=>({...x,title:'Alimentare',amount:x.total})),...db.expenses.map(x=>({...x,title:x.cat,amount:x.amount}))].sort((a,b)=>b.date.localeCompare(a.date)).slice(0,4);
+ $('recent').innerHTML=recent.length?recent.map(x=>`<div class="row"><span>${esc(x.title)}<br><small class="muted">${esc(x.date)}</small></span><b>${fmt(x.amount)} lei</b></div>`).join(''):'Nu ai înregistrări încă.';
+ $('fuelList').innerHTML=db.fuel.length?db.fuel.map(x=>`<div class="item"><div class="topline"><b>${fmt(x.total)} lei</b><small>${esc(x.date)}</small></div><div class="muted">${fmt(x.liters)} L × ${fmt(x.price)} lei/L · ${x.odo?Number(x.odo).toLocaleString('ro-RO')+' km':'km nespecificat'}</div><small>${esc(x.note||'')}</small><div style="text-align:right"><button class="danger" onclick="del('fuel',${x.id})">Șterge</button></div></div>`).join(''):'Nicio alimentare înregistrată.';
+ $('expenseList').innerHTML=db.expenses.length?db.expenses.map(x=>`<div class="item"><div class="topline"><b>${esc(x.cat)} · ${fmt(x.amount)} lei</b><small>${esc(x.date)}</small></div><small>${esc(x.note||'')}</small><div style="text-align:right"><button class="danger" onclick="del('expenses',${x.id})">Șterge</button></div></div>`).join(''):'Nicio cheltuială înregistrată.';
+ $('carList').innerHTML=db.cars.map(x=>`<div class="item"><b>${esc(x.name)}</b><small>${esc([x.year,x.engine,x.gear].filter(Boolean).join(' · '))}</small><div class="muted">${x.odo?Number(x.odo).toLocaleString('ro-RO')+' km':'Kilometraj nespecificat'}</div></div>`).join('')||'<div class="empty">Garaj gol.</div>';
+ let km=num('rKm')*(Number($('rTrip').value)||2),lit=km*num('rCons')/100,cost=lit*num('rPrice');$('rTotal').textContent=fmt(cost)+' lei';$('rLiters').textContent=fmt(lit)+' litri · '+km+' km';
+ let budget=num('budget'),pct=budget?Math.min(100,m/budget*100):0;$('budgetSpent').textContent=fmt(m)+' lei';$('budgetLeft').textContent=fmt(budget-m)+' lei';$('budgetBar').style.width=pct+'%';
+ $('fuelPreview').textContent=fmt(num('fLiters')*num('fPrice'))+' lei';
+}
+function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function exportData(){let blob=new Blob([JSON.stringify(db,null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='roadcost-backup-'+today+'.json';a.click();URL.revokeObjectURL(a.href)}
+function importData(e){let f=e.target.files[0];if(!f)return;let r=new FileReader();r.onload=()=>{try{let d=JSON.parse(r.result);if(!d.cars||!d.fuel||!d.expenses)throw 0;db=d;persist();toast('Backup importat!')}catch(_){toast('Fișier backup invalid.')}};r.readAsText(f)}
+document.querySelectorAll('.nav button').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.nav button').forEach(x=>x.classList.toggle('active',x===b));document.querySelectorAll('.section').forEach(x=>x.classList.toggle('active',x.id===b.dataset.tab));window.scrollTo(0,0)}));
+['rKm','rCons','rPrice','rTrip','budget','fLiters','fPrice'].forEach(id=>$(id).addEventListener('input',render));
+$('fDate').value=today;$('eDate').value=today;render();
+if('serviceWorker'in navigator && location.protocol.startsWith('http'))navigator.serviceWorker.register('./sw.js').catch(()=>{});
+</script>
+</body></html>
